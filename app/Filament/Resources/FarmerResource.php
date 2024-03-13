@@ -48,11 +48,20 @@ class FarmerResource extends Resource
                     ->columnSpanFull()
                     ->relationship('thlai_thars')
                     ->schema([
-                        Select::make('vegetable_id')
-                            ->relationship('vegetable', 'name')
-                            ->required()
-                            ->distinct()
-                            ->placeholder('Thlai hming'),
+
+                        Grid::make(2)
+                            ->schema([
+                                Select::make('vegetable_id')
+                                    ->relationship('vegetable', 'name')
+                                    ->required()
+                                    ->distinct()
+
+                                    ->placeholder('Thlai hming'),
+                                Select::make('district_id')
+                                    ->disabled()
+                                    ->default(fn () => auth()->user()->district_id)
+                                    ->relationship('district', 'name'),
+                            ]),
                         Grid::make(2)
                             ->schema([
                                 TextInput::make('thar_zat')
