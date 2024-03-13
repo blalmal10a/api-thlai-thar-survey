@@ -17,6 +17,7 @@ class CreateFarmer extends CreateRecord
     protected function mutateFormDataBeforeCreate(array $data): array
     {
         $data['vc_id'] = auth()->id();
+        $data['district_id'] = request()->user()?->district_id;
         $data['ip'] = request()->ip();
         return $data;
     }
