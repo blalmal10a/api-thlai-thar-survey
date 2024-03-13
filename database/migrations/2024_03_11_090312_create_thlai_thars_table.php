@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\District;
 use App\Models\Farmer;
 use App\Models\MeasurementUnit;
 use App\Models\Vegetable;
@@ -18,6 +19,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Vegetable::class);
             $table->foreignIdFor(Farmer::class);
+            $table->foreignIdFor(District::class)->nullable();
             $table->year('thar_kum')->nullable();
             $table->decimal('thar_zat')->nullable();
             $table->foreignIdFor(MeasurementUnit::class, 'thar_zat_unit_id')->nullable();
