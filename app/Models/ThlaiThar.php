@@ -23,4 +23,14 @@ class ThlaiThar extends Model
     {
         return $this->belongsTo(MeasurementUnit::class, 'beisei_zat_unit_id');
     }
+
+    public function farmer()
+    {
+        return $this->belongsTo(Farmer::class);
+    }
+
+    public function district()
+    {
+        return $this->belongsTo(District::class);
+    }
 }
