@@ -9,4 +9,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class District extends Model
 {
     use HasFactory, SoftDeletes;
+
+    public function farmers()
+    {
+        return $this->hasMany(Farmer::class);
+    }
+
+    public function vegetables()
+    {
+        return $this->hasMany(ThlaiThar::class);
+    }
 }
