@@ -20,7 +20,7 @@ class StatsOverview extends BaseWidget
         $statistics = [];
 
         foreach ($data as $item) {
-            array_push($statistics, Stat::make($item->vegetable . ', ' . $item->district . '-a thlai thar zat', $item->total_thlai_thar));
+            array_push($statistics, Stat::make($item->district . '-a, ' . strtoupper($item->vegetable) . ' thartu awm zat', $item->total_thlai_thar));
         }
         return $statistics;
         return [
