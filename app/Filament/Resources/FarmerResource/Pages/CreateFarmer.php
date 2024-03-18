@@ -9,6 +9,7 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateFarmer extends CreateRecord
 {
     protected static string $resource = FarmerResource::class;
+    protected static ?string $title = 'Add Farmer';
 
     protected function getRedirectUrl(): string
     {
