@@ -4,8 +4,11 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\FarmerResource\Pages;
 use App\Models\Farmer;
+use App\Models\Vegetable;
+use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -28,18 +31,19 @@ class FarmerResource extends Resource
 
     public static function form(Form $form): Form
     {
+        $year = date('Y');
         return $form
-
             ->schema([
                 TextInput::make('name')
                     ->required(),
                 TextInput::make('phone'),
-
                 Grid::make([])
                     ->schema([
                         TextInput::make('house_no'),
                         TextInput::make('locality'),
                         Select::make('district_id')
+                            ->hidden()
+                            // ->disabled()
                             ->default(fn () => auth()->user()->district_id)
                             ->relationship('district', 'name'),
                     ])->columns(2),
@@ -47,38 +51,64 @@ class FarmerResource extends Resource
                 Repeater::make('Thlai thar')
                     ->columnSpanFull()
                     ->relationship('thlai_thars')
+                    ->label('Thlai thar')
                     ->schema([
-
-                        Grid::make(2)
+                        Fieldset::make('Thlai hming')
                             ->schema([
                                 Select::make('vegetable_id')
                                     ->relationship('vegetable', 'name')
                                     ->required()
                                     ->distinct()
-
-                                    ->placeholder('Thlai hming'),
-                                Select::make('district_id')
-                                    ->disabled()
-                                    ->default(fn () => auth()->user()->district_id)
-                                    ->relationship('district', 'name'),
+                                    ->label(''),
                             ]),
-                        Grid::make(2)
+                        // ->placeholder(''),
+                        Fieldset::make(($year - 1) . ' thlai thar report')
                             ->schema([
                                 TextInput::make('thar_zat')
+                                    ->prefix('Quintal')
                                     ->numeric(),
-                                Select::make('thar_zat_unit_id')
-                                    ->default(1)
-                                    ->relationship('thar_zat_unit', 'name')
-                            ]),
-                        Grid::make(2)
-                            ->schema([
-                                TextInput::make('beisei_zat')
+                                TextInput::make('zau_zawng')
+                                    ->label('Thlai chinna hmun zau zawng')
+                                    ->prefix('Ṭin')
                                     ->numeric(),
-                                Select::make('beisei_zat_unit_id')
-                                    ->default(1)
-                                    ->relationship('beisei_zat_unit', 'name')
+
+                                TextInput::make('a_hring_rate')
+                                    // ->label('Thlai chinna hmun zau zawng')
+                                    ->prefix('Ṭin')
+                                    ->numeric(),
+                                TextInput::make('a_ro_rate')
+                                    // ->label('Thlai chinna hmun zau zawng')
+                                    ->prefix('Ṭin')
+                                    ->numeric(),
+
+                                TextInput::make('hralh_zat')
+                                    // ->label('Thlai chinna hmun zau zawng')
+                                    ->prefix('Quintal')
+                                    ->numeric(),
+
+
                             ])
+                            ->columns(2),
+
+                        Fieldset::make($year .  ' thlir lawkna')
+                            ->schema([
+                                TextInput::make('thar_zat_beisei')
+                                    ->label('Thar inbeisei zat')
+                                    ->prefix('Quintal')
+                                    ->numeric(),
+                                TextInput::make('zau_zawng_beisei')
+                                    ->label('Thlai chinna hmun zau zawng')
+                                    ->prefix('Ṭin')
+                                    ->numeric(),
+                            ])
+                            ->columns(2)
+
                     ])
+                    ->itemLabel(function ($state) {
+                        $veg = Vegetable::find($state['vegetable_id']);
+                        return $veg ? $veg->name : '';
+                    })
+                    ->reactive()
             ]);
     }
 
