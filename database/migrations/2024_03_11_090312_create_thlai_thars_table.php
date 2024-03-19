@@ -22,10 +22,20 @@ return new class extends Migration
             $table->foreignIdFor(District::class)->nullable();
             $table->year('thar_kum')->nullable();
             $table->decimal('thar_zat')->nullable();
-            $table->foreignIdFor(MeasurementUnit::class, 'thar_zat_unit_id')->nullable();
-            $table->string('beisei_kum')->nullable();
-            $table->decimal('beisei_zat')->nullable();
-            $table->foreignIdFor(MeasurementUnit::class, 'beisei_zat_unit_id')->nullable();
+            $table->decimal('zau_zawng')->nullable();
+            $table->decimal('a_hring_rate')->nullable();
+            $table->decimal('a_ro_rate')->nullable();
+            $table->decimal('hralh_zat')->nullable();
+            $table->decimal('hluihlawn_zat')->nullable();
+
+
+            $table->decimal('thar_zat_beisei')->nullable();
+            $table->decimal('zau_zawng_beisei')->nullable();
+
+            // $table->foreignIdFor(MeasurementUnit::class, 'thar_zat_unit_id')->nullable();
+            // $table->string('beisei_kum')->nullable();
+            // $table->decimal('beisei_zat')->nullable();
+            // $table->foreignIdFor(MeasurementUnit::class, 'beisei_zat_unit_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
