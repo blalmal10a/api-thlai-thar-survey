@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\FarmerResource\Pages;
+use App\Forms\Components\LatLong;
 use App\Models\Farmer;
 use App\Models\Vegetable;
 use Filament\Forms\Components\Fieldset;
@@ -41,6 +42,8 @@ class FarmerResource extends Resource
                     ->schema([
                         TextInput::make('house_no'),
                         TextInput::make('locality'),
+                        LatLong::make('latlong'),
+
                         Select::make('district_id')
                             ->hidden()
                             // ->disabled()
