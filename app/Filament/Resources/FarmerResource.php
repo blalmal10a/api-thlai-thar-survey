@@ -61,7 +61,6 @@ class FarmerResource extends Resource
                                     ->distinct()
                                     ->label(''),
                             ]),
-                        // ->placeholder(''),
                         Fieldset::make(($year - 1) . ' thlai thar report')
                             ->schema([
                                 TextInput::make('thar_zat')
@@ -73,20 +72,19 @@ class FarmerResource extends Resource
                                     ->numeric(),
 
                                 TextInput::make('a_hring_rate')
-                                    // ->label('Thlai chinna hmun zau zawng')
-                                    ->prefix('Ṭin')
-                                    ->numeric(),
+                                    ->suffix('per Kg')
+                                    ->numeric()
+                                    ->requiredIf('a_ro_rate', null),
                                 TextInput::make('a_ro_rate')
-                                    // ->label('Thlai chinna hmun zau zawng')
-                                    ->prefix('Ṭin')
-                                    ->numeric(),
-
+                                    ->suffix('per Kg')
+                                    ->numeric()
+                                    ->requiredIf('a_hring_rate', null),
                                 TextInput::make('hralh_zat')
-                                    // ->label('Thlai chinna hmun zau zawng')
                                     ->prefix('Quintal')
                                     ->numeric(),
-
-
+                                TextInput::make('hluihlawn_zat')
+                                    ->prefix('Quintal')
+                                    ->numeric(),
                             ])
                             ->columns(2),
 
@@ -160,7 +158,7 @@ class FarmerResource extends Resource
     public static function getRelations(): array
     {
         return [
-            AuditsRelationManager::class
+            // AuditsRelationManager::class
         ];
     }
 
