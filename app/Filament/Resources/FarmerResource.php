@@ -8,6 +8,7 @@ use App\Models\Farmer;
 use App\Models\Vegetable;
 use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
@@ -26,10 +27,7 @@ class FarmerResource extends Resource
     protected static ?string $model = Farmer::class;
     protected static ?string $name = 'Title';
     protected static ?string $navigationLabel = 'Thlai Thar';
-
-
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-
     public static function form(Form $form): Form
     {
         $year = date('Y');
@@ -42,11 +40,17 @@ class FarmerResource extends Resource
                     ->schema([
                         TextInput::make('house_no'),
                         TextInput::make('locality'),
+                        Hidden::make('district_id')
+                            ->default(function () {
+                                return request()->user()->district_id ?? 1;
+                            }),
                         LatLong::make('latlong'),
 
                         Select::make('district_id')
                             ->hidden()
-                            // ->disabled()
+                            ->default(function () {
+                                return request()->user()->district_id ?? 1;
+                            })
                             ->default(fn () => auth()->user()->district_id)
                             ->relationship('district', 'name'),
                     ])->columns(2),
@@ -62,6 +66,14 @@ class FarmerResource extends Resource
                                     ->relationship('vegetable', 'name')
                                     ->required()
                                     ->distinct()
+                                    ->label(''),
+
+                                Select::make('district_id')
+                                    ->default(function () {
+                                        return request()->user()->district_id ?? 1;
+                                    })
+                                    ->relationship('district', 'name')
+                                    ->required()
                                     ->label(''),
                             ]),
                         Fieldset::make(($year - 1) . ' thlai thar report')
