@@ -14,12 +14,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
-
         // \App\Models\User::factory(10)->create();
 
         //seed super user
-        $su = User::factory()->create([
+        $su = User::create([
             'name' => 'Super User',
             'email' => 'admin@example.email',
             'password' => bcrypt('admin@example.email')
