@@ -24,11 +24,12 @@ return new class extends Migration
             $table->decimal('thar_zat')->nullable();
             $table->decimal('zau_zawng')->nullable();
             $table->decimal('a_hring_rate')->nullable();
+            $table->decimal('a_hring_hralh_zat')->nullable();
+
             $table->decimal('a_ro_rate')->nullable();
-            $table->decimal('hralh_zat')->nullable();
+            $table->decimal('a_ro_hralh_zat')->nullable();
+
             $table->decimal('hluihlawn_zat')->nullable();
-
-
             $table->decimal('thar_zat_beisei')->nullable();
             $table->decimal('zau_zawng_beisei')->nullable();
 

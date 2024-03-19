@@ -75,11 +75,16 @@ class FarmerResource extends Resource
                                     ->suffix('per Kg')
                                     ->numeric()
                                     ->requiredIf('a_ro_rate', null),
+                                TextInput::make('a_hring_hralh_zat')
+                                    ->prefix('Quintal')
+                                    ->numeric(),
+
+
                                 TextInput::make('a_ro_rate')
                                     ->suffix('per Kg')
                                     ->numeric()
                                     ->requiredIf('a_hring_rate', null),
-                                TextInput::make('hralh_zat')
+                                TextInput::make('a_ro_hralh_zat')
                                     ->prefix('Quintal')
                                     ->numeric(),
                                 TextInput::make('hluihlawn_zat')
