@@ -140,7 +140,7 @@ class FarmerResource extends Resource
                     ->searchable(),
                 TextColumn::make('house_no')
                     ->searchable(),
-                TextColumn::make('ip')
+                TextColumn::make('latlong')
                     ->searchable(),
                 TextColumn::make('district.name')
                     ->sortable(),
