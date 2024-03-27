@@ -3,6 +3,7 @@
 use App\Models\District;
 use App\Models\Farmer;
 use App\Models\ThlaiThar;
+use App\Models\Vegetable;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
@@ -17,7 +18,26 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+
 Route::get('/stat', function () {
+    $allDistricts = District::pluck('name');
+    $allVegetables = Vegetable::pluck('name');
+    $result = [];
+    foreach ($allVegetables as $index => $vegetable) {
+        $result[$vegetable] = [
+            'label' => $vegetable,
+            'data' => [],
+        ];
+
+        foreach ($allDistricts as $district) {
+            $result[$vegetable]['data'][$district] = 0;
+        }
+    }
+
+
+
+
     $data = DB::table('thlai_thars as t')
         ->join('districts', 'districts.id', 't.district_id')
         ->join('vegetables', 'vegetables.id', 't.vegetable_id')
@@ -25,8 +45,27 @@ Route::get('/stat', function () {
         ->groupBy('district', 'vegetable')
         ->get();
 
-    return $data;
+    foreach ($data as $key => $item) {
+        $district = $item->district;
+        $vegetable = $item->vegetable;
+
+        $result[$vegetable]['data'][$district] = $item->total_thlai_thar;
+    }
+
+    return array_values($result);
 });
+
+// Route::get('/stat', function () {
+//     //hmanlai
+//     $data = DB::table('thlai_thars as t')
+//         ->join('districts', 'districts.id', 't.district_id')
+//         ->join('vegetables', 'vegetables.id', 't.vegetable_id')
+//         ->select('districts.name as district', 'vegetables.name as vegetable', DB::raw('count(*) as total_thlai_thar'))
+//         ->groupBy('district', 'vegetable')
+//         ->get();
+
+//     return $data;
+// });
 
 
 // Route::get('/stat', function () {

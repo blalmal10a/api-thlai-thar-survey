@@ -10,7 +10,7 @@ class StatsOverview extends BaseWidget
 {
     protected function getStats(): array
     {
-
+        return [];
         $data = DB::table('thlai_thars as t')
             ->join('districts', 'districts.id', 't.district_id')
             ->join('vegetables', 'vegetables.id', 't.vegetable_id')
@@ -22,7 +22,7 @@ class StatsOverview extends BaseWidget
         foreach ($data as $item) {
             array_push($statistics, Stat::make($item->district . '-a, ' . strtoupper($item->vegetable) . ' thartu awm zat', $item->total_thlai_thar));
         }
-        return $statistics;
+        // return $statistics;
         return [
 
             // Stat::make('Unique views', '192.1k'),
